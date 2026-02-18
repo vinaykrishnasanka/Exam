@@ -87,32 +87,57 @@
 <script>
 
 const questions = [
-    {q:"1. Python is a ___ language.", options:["Compiled","Interpreted","Assembly","Machine"], answer:1},
-    {q:"2. Which symbol is used for comments?", options:["//","#","/*","--"], answer:1},
-    {q:"3. Which function prints output?", options:["print()","echo()","display()","write()"], answer:0},
-    {q:"4. Which data type is immutable?", options:["List","Dictionary","Set","Tuple"], answer:3},
-    {q:"5. Keyword to define function?", options:["func","define","def","function"], answer:2},
-    {q:"6. Python file extension?", options:[".pt",".py",".java",".cpp"], answer:1},
-    {q:"7. Which is a loop?", options:["for","if","define","class"], answer:0},
-    {q:"8. len() is used for?", options:["Length","List","Loop","Logic"], answer:0},
-    {q:"9. Which is list?", options:["(1,2)","{1,2}","[1,2]","<1,2>"], answer:2},
-    {q:"10. Which is dictionary?", options:["{}","[]","()","<>"], answer:0},
-    {q:"11. Input function?", options:["get()","input()","read()","scan()"], answer:1},
-    {q:"12. Boolean values?", options:["Yes/No","True/False","1/0","On/Off"], answer:1},
-    {q:"13. Operator for power?", options:["^","**","//","%%"], answer:1},
-    {q:"14. Which is string?", options:["123","'Hello'","True","10.5"], answer:1},
-    {q:"15. Floor division operator?", options:["/","%","//","**"], answer:2},
-    {q:"16. Remove spaces method?", options:["trim()","strip()","remove()","cut()"], answer:1},
-    {q:"17. Add element to list?", options:["append()","add()","insert()","push()"], answer:0},
-    {q:"18. Which is conditional?", options:["loop","if","def","import"], answer:1},
-    {q:"19. Python supports OOP?", options:["Yes","No","Sometimes","Rarely"], answer:0},
-    {q:"20. Which is logical operator?", options:["and","plus","divide","equal"], answer:0},
-    {q:"21. Type conversion function?", options:["int()","convert()","change()","typecast()"], answer:0},
-    {q:"22. Which is set?", options:["{}","[]","()","set()"], answer:3},
-    {q:"23. Break is used to?", options:["Stop loop","Start loop","Pause","Continue"], answer:0},
-    {q:"24. Continue is used to?", options:["Stop","Skip iteration","Exit program","Restart"], answer:1},
-    {q:"25. Python was created by?", options:["James Gosling","Guido van Rossum","Dennis Ritchie","Bjarne Stroustrup"], answer:1}
+    {q:"1. What is the output of print(type([])) ?", options:["<class 'list'>","<type 'list'>","list","error"], answer:0},
+
+    {q:"2. Which of the following creates a tuple?", options:["[1,2,3]","{1,2,3}","(1,2,3)","<1,2,3>"], answer:2},
+
+    {q:"3. What will print(3 * 'ab') output?", options:["ababab","ab3","error","aaa bbb"], answer:0},
+
+    {q:"4. Which method is used to remove an item from a list by value?", options:["pop()","delete()","remove()","discard()"], answer:2},
+
+    {q:"5. What is the output of bool(0)?", options:["True","False","0","Error"], answer:1},
+
+    {q:"6. Which keyword is used for exception handling?", options:["catch","error","try","final"], answer:2},
+
+    {q:"7. What does range(3) return?", options:["[0,1,2]","(0,1,2)","0 1 2","range object"], answer:3},
+
+    {q:"8. Which of the following is a valid dictionary?", options:["{'a':1, 'b':2}","{1,2,3}","['a':1]","(a=1,b=2)"], answer:0},
+
+    {q:"9. What is the output of 10 % 3?", options:["3","1","0","Error"], answer:1},
+
+    {q:"10. Which function converts string to integer?", options:["str()","float()","int()","chr()"], answer:2},
+
+    {q:"11. What is the output of print(len('Python')) ?", options:["5","6","7","Error"], answer:1},
+
+    {q:"12. Which operator checks equality?", options:["=","==","!=","<="], answer:1},
+
+    {q:"13. What is the output of print(2 ** 3)?", options:["6","8","9","5"], answer:1},
+
+    {q:"14. Which statement is used to stop a loop?", options:["exit","continue","break","stop"], answer:2},
+
+    {q:"15. What does list('abc') return?", options:["['a','b','c']","['abc']","abc","Error"], answer:0},
+
+    {q:"16. What is the output of print(5 // 2)?", options:["2.5","3","2","1"], answer:2},
+
+    {q:"17. Which function returns ASCII value of a character?", options:["char()","ord()","ascii()","chr()"], answer:1},
+
+    {q:"18. What is the output of print(True and False)?", options:["True","False","None","Error"], answer:1},
+
+    {q:"19. Which method adds an element to end of list?", options:["insert()","append()","extend()","add()"], answer:1},
+
+    {q:"20. What will print(type(10.5)) output?", options:["<class 'int'>","<class 'float'>","float","number"], answer:1},
+
+    {q:"21. Which symbol is used for logical AND?", options:["&&","and","&","AND"], answer:1},
+
+    {q:"22. What is the output of print('Hello'[1]) ?", options:["H","e","l","Error"], answer:1},
+
+    {q:"23. Which of these is mutable?", options:["tuple","string","list","int"], answer:2},
+
+    {q:"24. What is the output of print(bool('')) ?", options:["True","False","None","Error"], answer:1},
+
+    {q:"25. Which keyword is used to define a class?", options:["class","define","struct","object"], answer:0}
 ];
+
 
 const quizForm = document.getElementById("quizForm");
 
@@ -193,3 +218,4 @@ function saveToExcel(name, score){
 
 </body>
 </html>
+
