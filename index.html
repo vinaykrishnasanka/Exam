@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python Online Test</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f2f2f2;
+        }
+
+        .options label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .correct { color: green; }
+        .wrong { color: red; }
+
+        input[type="text"]{
+            padding:8px;
+            width:300px;
+            margin-bottom:15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Python Basic Test (25 Questions)</h1>
+
+<div class="quiz-container">
+
+    <label><b>Candidate Name:</b></label><br>
+    <input type="text" id="studentName" placeholder="Enter your name"><br>
+
+    <form id="quizForm"></form>
+    <button onclick="submitQuiz()">Submit Test</button>
+    <div id="result"></div>
+</div>
+
+<script>
+
+const questions = [
+    {q:"1. Python is a ___ language.", options:["Compiled","Interpreted","Assembly","Machine"], answer:1},
+    {q:"2. Which symbol is used for comments?", options:["//","#","/*","--"], answer:1},
+    {q:"3. Which function prints output?", options:["print()","echo()","display()","write()"], answer:0},
+    {q:"4. Which data type is immutable?", options:["List","Dictionary","Set","Tuple"], answer:3},
+    {q:"5. Keyword to define function?", options:["func","define","def","function"], answer:2},
+    {q:"6. Python file extension?", options:[".pt",".py",".java",".cpp"], answer:1},
+    {q:"7. Which is a loop?", options:["for","if","define","class"], answer:0},
+    {q:"8. len() is used for?", options:["Length","List","Loop","Logic"], answer:0},
+    {q:"9. Which is list?", options:["(1,2)","{1,2}","[1,2]","<1,2>"], answer:2},
+    {q:"10. Which is dictionary?", options:["{}","[]","()","<>"], answer:0},
+    {q:"11. Input function?", options:["get()","input()","read()","scan()"], answer:1},
+    {q:"12. Boolean values?", options:["Yes/No","True/False","1/0","On/Off"], answer:1},
+    {q:"13. Operator for power?", options:["^","**","//","%%"], answer:1},
+    {q:"14. Which is string?", options:["123","'Hello'","True","10.5"], answer:1},
+    {q:"15. Floor division operator?", options:["/","%","//","**"], answer:2},
+    {q:"16. Remove spaces method?", options:["trim()","strip()","remove()","cut()"], answer:1},
+    {q:"17. Add element to list?", options:["append()","add()","insert()","push()"], answer:0},
+    {q:"18. Which is conditional?", options:["loop","if","def","import"], answer:1},
+    {q:"19. Python supports OOP?", options:["Yes","No","Sometimes","Rarely"], answer:0},
+    {q:"20. Which is logical operator?", options:["and","plus","divide","equal"], answer:0},
+    {q:"21. Type conversion function?", options:["int()","convert()","change()","typecast()"], answer:0},
+    {q:"22. Which is set?", options:["{}","[]","()","set()"], answer:3},
+    {q:"23. Break is used to?", options:["Stop loop","Start loop","Pause","Continue"], answer:0},
+    {q:"24. Continue is used to?", options:["Stop","Skip iteration","Exit program","Restart"], answer:1},
+    {q:"25. Python was created by?", options:["James Gosling","Guido van Rossum","Dennis Ritchie","Bjarne Stroustrup"], answer:1}
+];
+
+const quizForm = document.getElementById("quizForm");
+
+questions.forEach((item, index) => {
+    let div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<p>${item.q}</p>`;
+    
+    item.options.forEach((opt, i) => {
+        div.innerHTML += `
+            <div class="options">
+                <label>
+                    <input type="radio" name="q${index}" value="${i}"> ${opt}
+                </label>
+            </div>
+        `;
+    });
+
+    quizForm.appendChild(div);
+});
+
+function submitQuiz() {
+
+    const name = document.getElementById("studentName").value.trim();
+
+    if(name === ""){
+        alert("⚠ Please enter candidate name.");
+        return;
+    }
+
+    // Check if all questions answered
+    for(let i=0;i<questions.length;i++){
+        let selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if(!selected){
+            alert("⚠ Please answer all 25 questions before submitting.");
+            return;
+        }
+    }
+
+    let score = 0;
+    let resultHTML = "";
+
+    questions.forEach((item, index) => {
+        let selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if(parseInt(selected.value) === item.answer) {
+            score++;
+            resultHTML += `<p class="correct">Q${index+1}: Correct</p>`;
+        } else {
+            resultHTML += `<p class="wrong">Q${index+1}: Wrong (Correct Answer: ${item.options[item.answer]})</p>`;
+        }
+    });
+
+    resultHTML = `<h3>Your Score: ${score}/25</h3>` + resultHTML;
+    document.getElementById("result").innerHTML = resultHTML;
+
+    saveToExcel(name, score);
+}
+
+function saveToExcel(name, score){
+
+    const now = new Date();
+    const data = [
+        ["Candidate Name", name],
+        ["Date", now.toLocaleDateString()],
+        ["Time", now.toLocaleTimeString()],
+        ["Score", score],
+        ["Percentage", (score/25)*100 + "%"]
+    ];
+
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Result");
+
+    XLSX.writeFile(workbook, "Python_Test_Result.xlsx");
+}
+
+</script>
+
+</body>
+</html>
