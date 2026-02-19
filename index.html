@@ -87,55 +87,80 @@
 <script>
 
 const questions = [
-    {q:"1. What is the output of print(type([])) ?", options:["<class 'list'>","<type 'list'>","list","error"], answer:0},
+    {q:"1. What is the output of print([1,2,3] + [4,5]) ?", 
+     options:["[1,2,3,4,5]","[5,7,8]","Error","[1,2,3][4,5]"], answer:0},
 
-    {q:"2. Which of the following creates a tuple?", options:["[1,2,3]","{1,2,3}","(1,2,3)","<1,2,3>"], answer:2},
+    {q:"2. What will be the output of print(10 > 5 and 5 > 8)?", 
+     options:["True","False","None","Error"], answer:1},
 
-    {q:"3. What will print(3 * 'ab') output?", options:["ababab","ab3","error","aaa bbb"], answer:0},
+    {q:"3. What is the output of print('Python'.lower()) ?", 
+     options:["PYTHON","python","Python","Error"], answer:1},
 
-    {q:"4. Which method is used to remove an item from a list by value?", options:["pop()","delete()","remove()","discard()"], answer:2},
+    {q:"4. Which of the following is used to handle exceptions finally?", 
+     options:["catch","end","finally","close"], answer:2},
 
-    {q:"5. What is the output of bool(0)?", options:["True","False","0","Error"], answer:1},
+    {q:"5. What is the output of print(list(range(2,6))) ?", 
+     options:["[2,3,4,5]","[2,3,4,5,6]","[1,2,3,4,5]","range(2,6)"], answer:0},
 
-    {q:"6. Which keyword is used for exception handling?", options:["catch","error","try","final"], answer:2},
+    {q:"6. What will print(type({})) output?", 
+     options:["<class 'set'>","<class 'dict'>","<class 'list'>","Error"], answer:1},
 
-    {q:"7. What does range(3) return?", options:["[0,1,2]","(0,1,2)","0 1 2","range object"], answer:3},
+    {q:"7. What is the output of print(5 == 5.0)?", 
+     options:["True","False","Error","None"], answer:0},
 
-    {q:"8. Which of the following is a valid dictionary?", options:["{'a':1, 'b':2}","{1,2,3}","['a':1]","(a=1,b=2)"], answer:0},
+    {q:"8. Which method is used to convert all characters to uppercase?", 
+     options:["upper()","capitalize()","title()","case()"], answer:0},
 
-    {q:"9. What is the output of 10 % 3?", options:["3","1","0","Error"], answer:1},
+    {q:"9. What is the output of print(len([1,[2,3],4])) ?", 
+     options:["4","3","2","Error"], answer:1},
 
-    {q:"10. Which function converts string to integer?", options:["str()","float()","int()","chr()"], answer:2},
+    {q:"10. What will print(3 * 2 ** 2) output?", 
+     options:["36","12","24","18"], answer:1},
 
-    {q:"11. What is the output of print(len('Python')) ?", options:["5","6","7","Error"], answer:1},
+    {q:"11. Which of the following creates a set?", 
+     options:["{1,2,3}","[1,2,3]","(1,2,3)","{'1':'a'}"], answer:0},
 
-    {q:"12. Which operator checks equality?", options:["=","==","!=","<="], answer:1},
+    {q:"12. What is the output of print('abc' * 0)?", 
+     options:["abc","0","''","Error"], answer:2},
 
-    {q:"13. What is the output of print(2 ** 3)?", options:["6","8","9","5"], answer:1},
+    {q:"13. Which keyword is used to create an anonymous function?", 
+     options:["def","lambda","func","anon"], answer:1},
 
-    {q:"14. Which statement is used to stop a loop?", options:["exit","continue","break","stop"], answer:2},
+    {q:"14. What will print(bool([ ])) output?", 
+     options:["True","False","None","Error"], answer:1},
 
-    {q:"15. What does list('abc') return?", options:["['a','b','c']","['abc']","abc","Error"], answer:0},
+    {q:"15. What is the output of print(7 // 3)?", 
+     options:["2.33","2","3","1"], answer:1},
 
-    {q:"16. What is the output of print(5 // 2)?", options:["2.5","3","2","1"], answer:2},
+    {q:"16. What does dict.keys() return?", 
+     options:["Values","Keys","Items","Dictionary object"], answer:1},
 
-    {q:"17. Which function returns ASCII value of a character?", options:["char()","ord()","ascii()","chr()"], answer:1},
+    {q:"17. What is the output of print(4 in [1,2,3,4]) ?", 
+     options:["True","False","None","Error"], answer:0},
 
-    {q:"18. What is the output of print(True and False)?", options:["True","False","None","Error"], answer:1},
+    {q:"18. What will print('Hello'[::-1]) output?", 
+     options:["Hello","olleH","Error","None"], answer:1},
 
-    {q:"19. Which method adds an element to end of list?", options:["insert()","append()","extend()","add()"], answer:1},
+    {q:"19. Which function returns the maximum value?", 
+     options:["top()","high()","max()","greatest()"], answer:2},
 
-    {q:"20. What will print(type(10.5)) output?", options:["<class 'int'>","<class 'float'>","float","number"], answer:1},
+    {q:"20. What is the output of print(2 != 3)?", 
+     options:["True","False","None","Error"], answer:0},
 
-    {q:"21. Which symbol is used for logical AND?", options:["&&","and","&","AND"], answer:1},
+    {q:"21. What does list.append() return?", 
+     options:["New list","None","Element","True"], answer:1},
 
-    {q:"22. What is the output of print('Hello'[1]) ?", options:["H","e","l","Error"], answer:1},
+    {q:"22. What is the output of print(type(True)) ?", 
+     options:["<class 'bool'>","<class 'int'>","bool","Error"], answer:0},
 
-    {q:"23. Which of these is mutable?", options:["tuple","string","list","int"], answer:2},
+    {q:"23. What is the output of print({1,2,3} & {2,3,4}) ?", 
+     options:["{2,3}","{1,4}","{1,2,3,4}","Error"], answer:0},
 
-    {q:"24. What is the output of print(bool('')) ?", options:["True","False","None","Error"], answer:1},
+    {q:"24. What will print('5' + '5') output?", 
+     options:["10","55","Error","5 5"], answer:1},
 
-    {q:"25. Which keyword is used to define a class?", options:["class","define","struct","object"], answer:0}
+    {q:"25. Which method removes and returns last element of list?", 
+     options:["remove()","pop()","delete()","discard()"], answer:1}
 ];
 
 
@@ -218,4 +243,5 @@ function saveToExcel(name, score){
 
 </body>
 </html>
+
 
