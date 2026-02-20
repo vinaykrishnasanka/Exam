@@ -1,247 +1,224 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Python Online Test</title>
+    <title>Python Programming Exam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#4facfe,#00f2fe);
+    margin:0;
+    padding:20px;
+}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            padding: 20px;
-        }
+h1 {
+    text-align:center;
+    color:white;
+}
 
-        h1 {
-            text-align: center;
-            color: white;
-        }
+.container {
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
 
-        .quiz-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 900px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-        }
+input[type="text"]{
+    width:100%;
+    padding:10px;
+    margin-bottom:20px;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
 
-        .question {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            background: #f2f2f2;
-        }
+.question-card{
+    background:#f9f9f9;
+    padding:15px;
+    margin-bottom:20px;
+    border-radius:8px;
+    border-left:5px solid #4facfe;
+}
 
-        .options label {
-            display: block;
-            margin: 5px 0;
-            cursor: pointer;
-        }
+.question-card h3{
+    margin-bottom:10px;
+}
 
-        button {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+textarea{
+    width:100%;
+    height:150px;
+    margin-top:10px;
+    padding:10px;
+    font-family:monospace;
+    font-size:14px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    resize:vertical;
+}
 
-        button:hover {
-            background: #45a049;
-        }
+button{
+    padding:8px 15px;
+    margin-top:10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    background:#4facfe;
+    color:white;
+    transition:0.3s;
+}
 
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+button:hover{
+    background:#0077ff;
+}
 
-        .correct { color: green; }
-        .wrong { color: red; }
+.hidden{
+    display:none;
+}
 
-        input[type="text"]{
-            padding:8px;
-            width:300px;
-            margin-bottom:15px;
-        }
-    </style>
+.submit-btn{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    background:#28a745;
+}
+
+.submit-btn:hover{
+    background:#1e7e34;
+}
+
+</style>
 </head>
 <body>
 
-<h1>Python Basic Test (25 Questions)</h1>
+<h1>Python Programming Exam</h1>
 
-<div class="quiz-container">
+<div class="container">
 
-    <label><b>Candidate Name:</b></label><br>
-    <input type="text" id="studentName" placeholder="Enter your name"><br>
+    <label><b>Candidate Name:</b></label>
+    <input type="text" id="studentName" placeholder="Enter your name">
 
-    <form id="quizForm"></form>
-    <button onclick="submitQuiz()">Submit Test</button>
-    <div id="result"></div>
+    <div id="questionsContainer"></div>
+
+    <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
+
 </div>
 
 <script>
 
-const questions = [
-    {q:"1. What is the output of print([1,2,3] + [4,5]) ?", 
-     options:["[1,2,3,4,5]","[5,7,8]","Error","[1,2,3][4,5]"], answer:0},
+const programmingQuestions = [
 
-    {q:"2. What will be the output of print(10 > 5 and 5 > 8)?", 
-     options:["True","False","None","Error"], answer:1},
+{
+q: "1. Write a Python program to check whether a given number is Even or Odd.",
+hint: "Use input(), convert to int, and use modulus operator (%)",
+sample: "Input: 7\nOutput: Odd"
+},
 
-    {q:"3. What is the output of print('Python'.lower()) ?", 
-     options:["PYTHON","python","Python","Error"], answer:1},
+{
+q: "2. Write a Python program to calculate the factorial of a number.",
+hint: "Use loop (for/while). Initialize result = 1 and multiply till n.",
+sample: "Input: 5\nOutput: 120"
+},
 
-    {q:"4. Which of the following is used to handle exceptions finally?", 
-     options:["catch","end","finally","close"], answer:2},
+{
+q: "3. Write a Python program to reverse a string.",
+hint: "Use slicing [::-1] or loop from last index.",
+sample: "Input: Python\nOutput: nohtyP"
+},
 
-    {q:"5. What is the output of print(list(range(2,6))) ?", 
-     options:["[2,3,4,5]","[2,3,4,5,6]","[1,2,3,4,5]","range(2,6)"], answer:0},
+{
+q: "4. Write a Python program to count number of vowels in a string.",
+hint: "Check each character in 'aeiouAEIOU'. Use a counter.",
+sample: "Input: Hello\nOutput: 2"
+},
 
-    {q:"6. What will print(type({})) output?", 
-     options:["<class 'set'>","<class 'dict'>","<class 'list'>","Error"], answer:1},
+{
+q: "5. Write a Python program to find the largest number in a list.",
+hint: "Use loop comparison or max() function.",
+sample: "Input: [4, 7, 1, 9]\nOutput: 9"
+},
 
-    {q:"7. What is the output of print(5 == 5.0)?", 
-     options:["True","False","Error","None"], answer:0},
+{
+q: "6. Write a Python program to print first n terms of Fibonacci series.",
+hint: "First two numbers: 0 and 1. Next = sum of previous two.",
+sample: "Input: 5\nOutput: 0 1 1 2 3"
+},
 
-    {q:"8. Which method is used to convert all characters to uppercase?", 
-     options:["upper()","capitalize()","title()","case()"], answer:0},
+{
+q: "7. Write a Python program to check whether a number is Prime or not.",
+hint: "Check divisibility from 2 to n-1. Use a flag variable.",
+sample: "Input: 7\nOutput: Prime"
+},
 
-    {q:"9. What is the output of print(len([1,[2,3],4])) ?", 
-     options:["4","3","2","Error"], answer:1},
+{
+q: "8. Write a Python program to count number of words in a sentence.",
+hint: "Use split() method and find length.",
+sample: "Input: Hello world Python\nOutput: 3"
+},
 
-    {q:"10. What will print(3 * 2 ** 2) output?", 
-     options:["36","12","24","18"], answer:1},
+{
+q: "9. Write a Python program to remove duplicate elements from a list.",
+hint: "Convert list to set() or use new list and loop.",
+sample: "Input: [1,2,2,3,4,4]\nOutput: [1,2,3,4]"
+},
 
-    {q:"11. Which of the following creates a set?", 
-     options:["{1,2,3}","[1,2,3]","(1,2,3)","{'1':'a'}"], answer:0},
+{
+q: "10. Write a Python program to find the sum of digits of a number.",
+hint: "Use % 10 and // 10 or convert to string.",
+sample: "Input: 1234\nOutput: 10"
+}
 
-    {q:"12. What is the output of print('abc' * 0)?", 
-     options:["abc","0","''","Error"], answer:2},
-
-    {q:"13. Which keyword is used to create an anonymous function?", 
-     options:["def","lambda","func","anon"], answer:1},
-
-    {q:"14. What will print(bool([ ])) output?", 
-     options:["True","False","None","Error"], answer:1},
-
-    {q:"15. What is the output of print(7 // 3)?", 
-     options:["2.33","2","3","1"], answer:1},
-
-    {q:"16. What does dict.keys() return?", 
-     options:["Values","Keys","Items","Dictionary object"], answer:1},
-
-    {q:"17. What is the output of print(4 in [1,2,3,4]) ?", 
-     options:["True","False","None","Error"], answer:0},
-
-    {q:"18. What will print('Hello'[::-1]) output?", 
-     options:["Hello","olleH","Error","None"], answer:1},
-
-    {q:"19. Which function returns the maximum value?", 
-     options:["top()","high()","max()","greatest()"], answer:2},
-
-    {q:"20. What is the output of print(2 != 3)?", 
-     options:["True","False","None","Error"], answer:0},
-
-    {q:"21. What does list.append() return?", 
-     options:["New list","None","Element","True"], answer:1},
-
-    {q:"22. What is the output of print(type(True)) ?", 
-     options:["<class 'bool'>","<class 'int'>","bool","Error"], answer:0},
-
-    {q:"23. What is the output of print({1,2,3} & {2,3,4}) ?", 
-     options:["{2,3}","{1,4}","{1,2,3,4}","Error"], answer:0},
-
-    {q:"24. What will print('5' + '5') output?", 
-     options:["10","55","Error","5 5"], answer:1},
-
-    {q:"25. Which method removes and returns last element of list?", 
-     options:["remove()","pop()","delete()","discard()"], answer:1}
 ];
 
+const container = document.getElementById("questionsContainer");
 
-const quizForm = document.getElementById("quizForm");
+programmingQuestions.forEach((item, index) => {
 
-questions.forEach((item, index) => {
-    let div = document.createElement("div");
-    div.className = "question";
-    div.innerHTML = `<p>${item.q}</p>`;
-    
-    item.options.forEach((opt, i) => {
-        div.innerHTML += `
-            <div class="options">
-                <label>
-                    <input type="radio" name="q${index}" value="${i}"> ${opt}
-                </label>
-            </div>
-        `;
-    });
+    const div = document.createElement("div");
+    div.className = "question-card";
 
-    quizForm.appendChild(div);
+    div.innerHTML = `
+        <h3>${item.q}</h3>
+
+        <button onclick="toggleHint(${index})">Show Hint</button>
+        <p id="hint${index}" class="hidden"><b>Hint:</b> ${item.hint}</p>
+
+        <button onclick="toggleSample(${index})">Show Example</button>
+        <pre id="sample${index}" class="hidden"><b>Example:</b>\n${item.sample}</pre>
+
+        <textarea id="answer${index}" placeholder="Write your Python code here..."></textarea>
+    `;
+
+    container.appendChild(div);
 });
 
-function submitQuiz() {
+function toggleHint(index){
+    document.getElementById("hint"+index).classList.toggle("hidden");
+}
+
+function toggleSample(index){
+    document.getElementById("sample"+index).classList.toggle("hidden");
+}
+
+function submitExam(){
 
     const name = document.getElementById("studentName").value.trim();
 
     if(name === ""){
-        alert("⚠ Please enter candidate name.");
+        alert("Please enter your name before submitting.");
         return;
     }
 
-    // Check if all questions answered
-    for(let i=0;i<questions.length;i++){
-        let selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if(!selected){
-            alert("⚠ Please answer all 25 questions before submitting.");
-            return;
-        }
+    if(!confirm("Are you sure you want to submit the exam?")){
+        return;
     }
 
-    let score = 0;
-    let resultHTML = "";
+    alert("Exam submitted successfully!\n\n(Note: Code evaluation not enabled yet.)");
 
-    questions.forEach((item, index) => {
-        let selected = document.querySelector(`input[name="q${index}"]:checked`);
-        if(parseInt(selected.value) === item.answer) {
-            score++;
-            resultHTML += `<p class="correct">Q${index+1}: Correct</p>`;
-        } else {
-            resultHTML += `<p class="wrong">Q${index+1}: Wrong (Correct Answer: ${item.options[item.answer]})</p>`;
-        }
-    });
-
-    resultHTML = `<h3>Your Score: ${score}/25</h3>` + resultHTML;
-    document.getElementById("result").innerHTML = resultHTML;
-
-    saveToExcel(name, score);
-}
-
-function saveToExcel(name, score){
-
-    const now = new Date();
-    const data = [
-        ["Candidate Name", name],
-        ["Date", now.toLocaleDateString()],
-        ["Time", now.toLocaleTimeString()],
-        ["Score", score],
-        ["Percentage", (score/25)*100 + "%"]
-    ];
-
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Result");
-
-    XLSX.writeFile(workbook, "Python_Test_Result.xlsx");
 }
 
 </script>
 
 </body>
 </html>
-
-
